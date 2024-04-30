@@ -18,7 +18,7 @@ TIOS is a user interface that has the following features:
 
    ```sh
    conda create \
-     --name snowpark python=3.10 \
+     --name streamlit-tios python=3.10 \
      --override-channels \
      -c https://repo.anaconda.com/pkgs/snowflake
    ```
@@ -26,7 +26,7 @@ TIOS is a user interface that has the following features:
 1. Activate environment and install packages
 
    ```sh
-   conda activate snowpark
+   conda activate streamlit-tios
    pip install --upgrade -r requirements-dev.txt
    ```
 
@@ -41,22 +41,6 @@ TIOS is a user interface that has the following features:
     database="my_db"
     schema="TIOS_DEV"
     role="my_tios_role"
-   ```
-
-1. Create a python 3.10 environment compatible with snowpark
-
-   ```sh
-   conda create \
-     --name snowpark python=3.10 \
-     --override-channels \
-     -c https://repo.anaconda.com/pkgs/snowflake
-   ```
-
-1. Activate environment and install packages
-
-   ```sh
-   conda activate streamlit-tios
-   pip install --upgrade -r requirements-dev.txt
    ```
 
 With this your local environment is ready to run the application.
