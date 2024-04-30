@@ -50,7 +50,7 @@ With this your local environment is ready to run the application.
 Activate the environment and run the app
 
 ```sh
-conda activate snowpark
+conda activate streamlit-tios
 streamlit run tios/1_tios_app.py
 ```
 
