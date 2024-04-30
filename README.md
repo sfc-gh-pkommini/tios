@@ -1,4 +1,6 @@
-# TIOS on Streamlit
+[![linting-action](https://github.com/sfc-gh-pkommini/tios/actions/workflows/ci.yaml/badge.svg)](https://github.com/sfc-gh-pkommini/tios/actions/workflows/ci.yaml)
+
+# Vulnerability and Threat Intelligence on Snowflake - Vuln Asset Search Streamlit App
 
 TIOS is a user interface that has the following features:
 
