@@ -1,0 +1,10 @@
+black
+mypy
+pandas
+pandas-stubs
+plotly
+pytest
+pytest-cov
+pytest-mock
+snowflake-snowpark-python[pandas]
+streamlit

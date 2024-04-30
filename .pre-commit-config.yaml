@@ -1,0 +1,21 @@
+fail_fast: true
+
+repos:
+  - repo: https://github.com/ambv/black
+    rev: 24.1.1
+    hooks:
+      - id: black
+        args: [--diff, --check, --skip-string-normalization]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        files: ./tios
+        args:
+          [
+            --strict --install-types,
+            --show-column-numbers,
+            --ignore-missing-imports,
+            --follow-imports=silent,
+          ]

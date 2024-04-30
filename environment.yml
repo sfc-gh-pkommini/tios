@@ -1,0 +1,6 @@
+name: streamlit-tios
+channels:
+  - snowflake
+dependencies:
+  - pandas
+  - plotly

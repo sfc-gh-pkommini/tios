@@ -1,0 +1,4 @@
+pandas
+plotly
+snowflake-snowpark-python[pandas]
+streamlit
