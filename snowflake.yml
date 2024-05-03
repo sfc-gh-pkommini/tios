@@ -1,0 +1,16 @@
+definition_version: 1
+streamlit:
+  name: TIOS_DEMO
+  stage: TIOS
+  query_warehouse: TIOS_DEV_WH
+  main_file: 1_tios_app.py
+  env_file: environment.yml
+  additional_source_files:
+    - tios/__init__.py
+    - tios/utils/__init__.py
+    - tios/utils/constants.py
+    - tios/utils/db.py
+    - tios/utils/models.py
+    - tios/utils/state.py
+    - tios/utils/ui.py
+    - tios/utils/utils.py

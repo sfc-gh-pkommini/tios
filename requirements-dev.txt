@@ -8,3 +8,4 @@ pytest-cov
 pytest-mock
 snowflake-snowpark-python[pandas]
 streamlit
+git+https://github.com/Snowflake-Labs/snowcli.git@v2.2.0
