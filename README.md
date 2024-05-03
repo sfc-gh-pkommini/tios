@@ -81,7 +81,7 @@ We use snowcli to do the deployments.
    pip install git+https://github.com/Snowflake-Labs/snowcli.git@v2.2.0
    ```
 
-1. Deploy the Streamlit App (Stage is created automatically)
+1. Deploy the Streamlit App
 
    ```bash
    snow streamlit deploy -c tios_demo --project=./ --replace
