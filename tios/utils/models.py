@@ -103,7 +103,6 @@ def get_asset_vulns(
         df = df.filter(
             (col("TITLE").like(lit(search_term_pkg_wildcard)))
             | (col("CPE_PURL_PKG").like(lit(search_term_pkg_wildcard)))
-            | (col("HOSTED_TECHNOLOGY_NAME").like(lit(search_term_pkg_wildcard)))
         )
 
     df = (
@@ -246,7 +245,7 @@ def severity_counts() -> pd.DataFrame:
                     (col("cvss") >= lit(4.0)) & (col("cvss") < lit(7.0)), lit("MEDIUM")
                 )
                 .otherwise(lit("LOW"))
-                .as_("severity")
+                .alias("severity")
             ),
             (
                 rank()
@@ -269,7 +268,13 @@ def severity_counts() -> pd.DataFrame:
         .group_by(col("severity"))
         .agg(count(col("cvss")).alias("counts"))
     )
-    return pd.DataFrame(df_tios_asset_vulns_exact_match.collect())
+    return pd.DataFrame(
+        df_tios_asset_vulns_exact_match.collect(),
+        columns=[
+            "SEVERITY",
+            "COUNTS",
+        ],
+    )
 
 
 @st.cache_data(ttl=7200)

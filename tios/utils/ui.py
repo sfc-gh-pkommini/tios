@@ -100,6 +100,11 @@ def draw_dashboard() -> None:
     with counts_grid_layout[0][1]:
         st.write("Severities of Vulnerabilities Affecting Hosts")
         severity_counts_df = severity_counts()
+        severity_counts_df = severity_counts_df.fillna(0).infer_objects(copy=False)  # type: ignore
+        print(severity_counts_df)
+        df_severities = severity_counts_df["SEVERITY"].tolist()
+        print(df_severities)
+
         severity_metrics_grid_layout_key = "severity_metrics_grid_layout"
         draw_layout_grid(3, [0.5, 0.5], key=severity_metrics_grid_layout_key)
         severity_metrics_grid_layout = st.session_state[
@@ -107,27 +112,55 @@ def draw_dashboard() -> None:
         ]
 
         with severity_metrics_grid_layout[0][0]:
-            critical_vuln_count = severity_counts_df.iloc[0]["COUNTS"]
+            if "CRITICAL" in df_severities:
+                critical_idx = severity_counts_df.index[
+                    severity_counts_df["SEVERITY"] == "CRITICAL"
+                ].tolist()[0]
+                critical_vuln_count = severity_counts_df.iloc[critical_idx]["COUNTS"]
+            else:
+                critical_vuln_count = 0
+
             st.metric(
                 label="Critical Severity",
                 value=critical_vuln_count,
             )
 
         with severity_metrics_grid_layout[0][1]:
-            high_vuln_count = severity_counts_df.iloc[1]["COUNTS"]
+            if "HIGH" in df_severities:
+                high_idx = severity_counts_df.index[
+                    severity_counts_df["SEVERITY"] == "HIGH"
+                ].tolist()[0]
+                high_vuln_count = severity_counts_df.iloc[high_idx]["COUNTS"]
+            else:
+                high_vuln_count = 0
+
             st.metric(
                 label="High Severity",
                 value=high_vuln_count,
             )
 
         with severity_metrics_grid_layout[2][0]:
-            med_vuln_count = severity_counts_df.iloc[2]["COUNTS"]
+            if "MEDIUM" in df_severities:
+                medium_idx = severity_counts_df.index[
+                    severity_counts_df["SEVERITY"] == "MEDIUM"
+                ].tolist()[0]
+                med_vuln_count = severity_counts_df.iloc[medium_idx]["COUNTS"]
+            else:
+                med_vuln_count = 0
+
             st.metric(
                 label="Medium Severity",
                 value=med_vuln_count,
             )
         with severity_metrics_grid_layout[2][1]:
-            low_vuln_count = severity_counts_df.iloc[3]["COUNTS"]
+            if "LOW" in df_severities:
+                low_idx = severity_counts_df.index[
+                    severity_counts_df["SEVERITY"] == "MEDIUM"
+                ].tolist()[0]
+                low_vuln_count = severity_counts_df.iloc[low_idx]["COUNTS"]
+            else:
+                low_vuln_count = 0
+
             st.metric(
                 label="Low Severity",
                 value=low_vuln_count,
