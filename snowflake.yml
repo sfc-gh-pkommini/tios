@@ -2,7 +2,7 @@ definition_version: 1
 streamlit:
   name: TIOS_DEMO
   stage: TIOS
-  query_warehouse: TIOS_DEV_WH
+  query_warehouse: TIOS_DEV_WH # modify based on your environment
   main_file: 1_tios_app.py
   env_file: environment.yml
   additional_source_files:
