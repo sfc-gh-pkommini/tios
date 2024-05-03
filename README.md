@@ -60,69 +60,29 @@ streamlit run tios/1_tios_app.py
 
 We use snowcli to do the deployments.
 
-1. Create `~/.snowflake/config.toml` to setup connections required by snowflakecli
+1. Create `~/.snowflake/config.toml` to setup connections required by snowflakecli. You'll need [account locator](https://docs.snowflake.com/en/user-guide/admin-account-identifier#finding-the-organization-and-account-name-for-an-account)
 
-   ```toml
+   ```conf
     [connections]
 
-    [connections.tios_dev]
-    account = "my_account_id"
+    [connections.tios_demo]
+    account = "my_account_id" # Use account locator
     user = "my_username"
     authenticator = "externalbrowser"
     database = "my_db"
-    schema = "TIOS_DEV"
-    warehouse = "DEV_WH"
-    role = "my_tios_role"
-
-    [connections.tios_uat]
-    account = "my_account_id"
-    user = "my_username"
-    authenticator = "externalbrowser"
-    database = "my_db"
-    schema = "TIOS_UAT"
-    warehouse = "UAT_WH"
-    role = "my_tios_role"
-
-    [connections.tios]
-    account = "my_account_id"
-    user = "my_username"
-    authenticator = "externalbrowser"
-    database = "my_db"
-    schema = "TIOS"
+    schema = "TIOS_DEMO"
     warehouse = "MY_WH"
     role = "my_tios_role"
    ```
 
-1. Install and Setup snowflakecli using instructions [here](https://docs.snowflake.com/LIMITEDACCESS/snowcli/installation/installation).
-
-1. Make tios.zip code archive
+1. Install and Setup snowflakecli using instructions
 
    ```bash
-   zip -r tios.zip tios/
+   pip install git+https://github.com/Snowflake-Labs/snowcli.git@v2.2.0
    ```
 
 1. Deploy the Streamlit App (Stage is created automatically)
 
    ```bash
-   # dev
-   snow streamlit deploy STREAMLIT_TIOS_DEV -c tios_dev --file=1_tios_app.py --replace --query-warehouse DEV_WH
-
-   # uat
-   snow streamlit deploy STREAMLIT_TIOS_UAT -c tios_uat --file=1_tios_app.py --replace --query-warehouse UAT_WH
-
-   # prod
-   snow streamlit deploy STREAMLIT_TIOS -c tios --file=1_tios_app.py --replace --query-warehouse MY_WH
-   ```
-
-1. Upload Source Code Archive (`tios.zip`)
-
-   ```bash
-   # dev
-   snow stage put tios.zip STREAMLIT/STREAMLIT_TIOS_DEV/ --overwrite -c tios_dev
-
-   # uat
-   snow stage put tios.zip STREAMLIT/STREAMLIT_TIOS_UAT/ --overwrite -c tios_uat
-
-   # prod
-   snow stage put tios.zip STREAMLIT/STREAMLIT_TIOS/ --overwrite -c tios
+   snow streamlit deploy -c tios_demo --project=./ --replace
    ```
