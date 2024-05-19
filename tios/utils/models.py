@@ -50,8 +50,8 @@ def get_asset_vulns(
 
     if published_date_start and published_date_end:
         df = df.filter(
-            (to_timestamp(col("VULNDB_PUBLISHED_DATE")) >= published_date_start)
-            & (to_timestamp(col("VULNDB_PUBLISHED_DATE")) <= published_date_end)
+            (to_timestamp(col("THREAT_INTEL_PUBLISHED_DATE")) >= published_date_start)
+            & (to_timestamp(col("THREAT_INTEL_PUBLISHED_DATE")) <= published_date_end)
         )
 
     if severities:
@@ -109,7 +109,7 @@ def get_asset_vulns(
         df.select(
             TIOS_VULN_ASSET_JOIN_TABLE_COLUMNS + [count("*").over().alias("FULL_COUNT")]
         )
-        .order_by([col("CVSS"), col("VULNDB_PUBLISHED_DATE").desc()], ascending=[0, 0])
+        .order_by([col("CVSS"), col("THREAT_INTEL_PUBLISHED_DATE").desc()], ascending=[0, 0])
         .limit(
             n=page_size,
             offset=offset,
@@ -155,7 +155,7 @@ def most_recent_vuln_pub_date() -> pd.DataFrame:
     df_tios_asset_vulns_matches_table = session.table(
         TIOS_CPE_MATCH_CONSOLIDATED_TABLE
     ).select(
-        to_varchar(max(col("vulndb_published_date")), "DY, DD MON YYYY").alias(
+        to_varchar(max(col("threat_intel_published_date")), "DY, DD MON YYYY").alias(
             "MOST RECENT PUBLISHED"
         )
     )
@@ -169,7 +169,7 @@ def most_recent_vuln_mod_date() -> pd.DataFrame:
     df_tios_asset_vulns_matches_table = session.table(
         TIOS_CPE_MATCH_CONSOLIDATED_TABLE
     ).select(
-        to_varchar(max(col("vulndb_last_modified")), "DY, DD MON YYYY").alias(
+        to_varchar(max(col("threat_intel_last_modified")), "DY, DD MON YYYY").alias(
             "MOST RECENT MODIFIED"
         )
     )
@@ -234,7 +234,7 @@ def severity_counts() -> pd.DataFrame:
     df_ranked = (
         session.table(TIOS_CPE_MATCH_CONSOLIDATED_TABLE)
         .select(
-            col("vulndb_id"),
+            col("threat_intel_id"),
             col("cve_id"),
             col("cvss"),
             col("generated_on"),
@@ -250,7 +250,7 @@ def severity_counts() -> pd.DataFrame:
             (
                 rank()
                 .over(
-                    Window.partition_by(col("vulndb_id"), col("cve_id")).order_by(
+                    Window.partition_by(col("threat_intel_id"), col("cve_id")).order_by(
                         col("generated_on")
                     )
                 )
